@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\lsassanelli\\Desktop\\FIDELITY CARD\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B197F19B-7C90-4BFB-AF65-6478E6B1B97D}|FidelityCard\\FidelityCard.csproj|c:\\users\\lsassanelli\\desktop\\fidelity card\\fidelitycard\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B197F19B-7C90-4BFB-AF65-6478E6B1B97D}|FidelityCard\\FidelityCard.csproj|solutionrelative:fidelitycard\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B197F19B-7C90-4BFB-AF65-6478E6B1B97D}|FidelityCard\\FidelityCard.csproj|c:\\users\\lsassanelli\\desktop\\fidelity card\\fidelitycard\\pages\\fidelitypage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B197F19B-7C90-4BFB-AF65-6478E6B1B97D}|FidelityCard\\FidelityCard.csproj|solutionrelative:fidelitycard\\pages\\fidelitypage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FidelityPage.razor",
+              "DocumentMoniker": "C:\\Users\\lsassanelli\\Desktop\\FIDELITY CARD\\FidelityCard\\Pages\\FidelityPage.razor",
+              "RelativeDocumentMoniker": "FidelityCard\\Pages\\FidelityPage.razor",
+              "ToolTip": "C:\\Users\\lsassanelli\\Desktop\\FIDELITY CARD\\FidelityCard\\Pages\\FidelityPage.razor",
+              "RelativeToolTip": "FidelityCard\\Pages\\FidelityPage.razor",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-31T15:36:42.015Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\lsassanelli\\Desktop\\FIDELITY CARD\\FidelityCard\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "FidelityCard\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\lsassanelli\\Desktop\\FIDELITY CARD\\FidelityCard\\Pages\\Home.razor",
+              "RelativeToolTip": "FidelityCard\\Pages\\Home.razor",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAIwBUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-03T12:15:33.309Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

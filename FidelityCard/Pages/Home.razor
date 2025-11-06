@@ -1,0 +1,43 @@
+﻿@page "/"
+@using FidelityCard.Lib.Models
+@using System.Text.Json
+
+@inject HttpClient HC
+@inject IJSRuntime JS
+
+
+<div class="text-center py-3 mb-4" style="background-color:black; color:white;">
+    <img src="img\logo.png" style="width:min(30%, 150px)" />
+    <h1 class="fs-3 m-0" >Benvenuto nel sistema Fidelity Card</h1>
+</div>
+
+<div class="text-center">
+     <InputText placeholder="Email" @bind-Value ="@Email"/>
+</div>
+
+
+
+
+@code 
+{
+    private string Email { get; set; } = string.Empty;
+    private string ErrorMessage { get; set; } = string.Empty;
+    //  private Dictionary<string, object> manifestData = [];
+    public static CustomSettings? CustomSettings { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }       
+
+    protected override async Task OnAfterRenderAsync(bool first)
+    {
+        await base.OnAfterRenderAsync(first);
+        // if (CustomSettings == null)
+        {
+            var manifestData = await JS.InvokeAsync<Dictionary<string, JsonElement>>("manifestInterop.getManifest");
+            CustomSettings = JsonSerializer.Deserialize<CustomSettings>(manifestData["custom_settings"]);         
+        }
+    }
+
+}
