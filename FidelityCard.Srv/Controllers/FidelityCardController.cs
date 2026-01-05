@@ -41,13 +41,13 @@ public class FidelityCardController(FidelityCardDbContext context,
 
     // GET: api/FidelityCard/EmailValidation
     [HttpGet("[action]")]
-    public async Task<IActionResult> EmailValidation(string email, string store)
+    public async Task<IActionResult> EmailValidation(string email, string? store)
     {
         // Verifica se l'utente esiste già
         var existingUser = await _context.Fidelity.FirstOrDefaultAsync(f => f.Email == email);
 
         // Genero token usando il servizio
-        var token = _tokenService.GenerateToken(email, store);
+        var token = _tokenService.GenerateToken(email, store ?? "NE001");
 
         if (existingUser != null)
         {

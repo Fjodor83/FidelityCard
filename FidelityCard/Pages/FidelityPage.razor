@@ -9,54 +9,94 @@
 
 @if(IsVisible)
 {
+    @if (IsLoading)
+    {
+        <div class="spinner-overlay">
+            <div class="elegant-spinner"></div>
+            <div class="loading-text">Elaborazione in corso...</div>
+        </div>
+    }
+
+    <!-- Toast Notification -->
+    <div class="toast-container-custom">
+        <div class="toast-custom @(IsToastVisible ? "show" : "") @(IsToastError ? "error" : "success")">
+            <div class="toast-icon">
+                <i class="bi @(IsToastError ? "bi-x-circle-fill" : "bi-check-circle-fill")"></i>
+            </div>
+            <div class="toast-content">
+                <h6>@(IsToastError ? "Attenzione" : "Successo")</h6>
+                <p>@ToastMessage</p>
+            </div>
+        </div>
+    </div>
+
     <div class="min-vh-100 d-flex align-items-center bg-white">
         <div class="container py-4">
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-8">
-                    <div class="card shadow-lg border-0" style="border-radius: 20px;">
-                        <div class="card-header text-white text-center py-4 registration-header" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
-                             <img src="img/logo.avif" alt="Logo" style="width: 80px; height: auto; filter: brightness(0) invert(1);" class="mb-2"/>
-                            <h3 class="mb-0 fw-bold">👤 Completa il tuo Profilo</h3>
-                            <p class="mb-0 small opacity-75">Suns - Zero & Company</p>
-                        </div>
-                        <div class="card-body p-4 p-md-5">
-                            
-                             <div class="alert alert-info border-0 bg-light shadow-sm mb-4">
-                                <div class="d-flex">
-                                    <div class="me-3 text-primary fs-4">
-                                        <i class="bi bi-info-circle-fill"></i>
+                    
+                    @if(Success)
+                    {
+                         <div class="flip-card-container fade-in-up">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <div class="card-shine"></div>
+                                    <img src="img/logo.avif" alt="Logo" style="width: 60px; height: auto; filter: brightness(0) invert(1);" class="mb-2"/>
+                                    <h4 class="fw-bold mb-1">Benvenuto in Suns</h4>
+                                    
+                                    <div class="my-2 bg-white p-2 rounded shadow-sm" style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center;">
+                                        <img src="@($"{CustomSettings?.Endpoint}/api/FidelityCard/QRCode/{Fidelity.CdFidelity}")" alt="QR Code" class="img-fluid" />
                                     </div>
-                                    <div>
-                                        <h6 class="alert-heading fw-bold mb-1">Benvenuto!</h6>
-                                        <p class="mb-0 text-muted small">Per completare la registrazione e ottenere la tua <strong>Fidelity Card</strong>, inserisci i tuoi dati reali. I campi contrassegnati sono obbligatori.</p>
+                                    
+                                    <p class="opacity-75 small mb-0">Fidelity Card Digitale</p>
+                                    <div class="mt-2">
+                                        <i class="bi bi-arrow-repeat fs-2 opacity-50 pulse-subtle"></i>
+                                    </div>
+                                </div>
+                                <div class="flip-card-back">
+                                    <div class="p-4">
+                                        <h5 class="fw-bold text-primary mb-3">La tua Card</h5>
+                                        <div class="bg-light p-3 rounded mb-3">
+                                            <h2 class="mb-0 fw-bold font-monospace">@Fidelity.CdFidelity</h2>
+                                            <small class="text-muted">Codice Cliente</small>
+                                        </div>
+                                        <p class="small text-muted mb-2">Mostra questo codice in cassa per accumulare punti.</p>
+                                        <p class="small text-muted">Una copia è stata inviata alla tua email.</p>
                                     </div>
                                 </div>
                             </div>
-
-                            @if(Success)
-                            {
-                                <div class="text-center py-5">
-                                    <div class="mb-4">
-                                        <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                        </div>
+                        <div class="text-center mt-4 fade-in-up delay-200">
+                            <h2 class="fw-bold mb-2">Registrazione Completata!</h2>
+                            <p class="text-muted">Grazie per esserti registrato.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card shadow-lg border-0 fade-in-up" style="border-radius: 20px;">
+                            <div class="card-header text-white text-center py-4 registration-header" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                                <img src="img/logo.avif" alt="Logo" style="width: 80px; height: auto; filter: brightness(0) invert(1);" class="mb-2"/>
+                                <h3 class="mb-0 fw-bold">👤 Completa il tuo Profilo</h3>
+                                <p class="mb-0 small opacity-75">Suns - Zero & Company</p>
+                            </div>
+                            <div class="card-body p-4 p-md-5">
+                                
+                                <div class="alert alert-info border-0 bg-light shadow-sm mb-4">
+                                    <div class="d-flex">
+                                        <div class="me-3 text-primary fs-4">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="alert-heading fw-bold mb-1">Benvenuto!</h6>
+                                            <p class="mb-0 text-muted small">Per completare la registrazione e ottenere la tua <strong>Fidelity Card</strong>, inserisci i tuoi dati reali.</p>
+                                        </div>
                                     </div>
-                                    <h2 class="fw-bold mb-3">Registrazione Completata!</h2>
-                                    <p class="text-muted mb-4 lead">Grazie per esserti registrato.</p>
-                                    <p class="mb-2">Ti abbiamo inviato una email con la tua <strong>Fidelity Card digitale</strong>.</p>
-                                    <p class="text-muted small">Controlla la tua casella di posta (anche nello spam).</p>
                                 </div>
-                            }
-                            else
-                            {
+
                                 <EditForm Model="Fidelity" OnSubmit="OnHandleSubmit">
                                     <DataAnnotationsValidator />
                                     
-                                    @if (!string.IsNullOrEmpty(ErrorMessage))
-                                    {
-                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <i class="bi bi-exclamation-octagon me-2"></i> @ErrorMessage
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @onclick='() => ErrorMessage = ""'></button>
-                                        </div>
-                                    }
+                                    <!-- Toast replaces static error message -->
 
                                     <div class="row g-3">
                                         <!-- Anagrafica -->
@@ -81,7 +121,7 @@
                                             <div class="form-group mb-1">
                                                 <label for="DataNascita" class="form-label-modern">Data di nascita</label>
                                                 <div class="date-input-wrapper">
-                                                    <InputDate id="DataNascita" @bind-Value="Fidelity.DataNascita" class="form-control form-control-modern" placeholder="dd/mm/yyyy" />
+                                                    <InputDate id="DataNascita" @bind-Value="Fidelity.DataNascita" class="form-control form-control-modern" />
                                                     <i class="bi bi-calendar-event date-icon"></i>
                                                 </div>
                                                 <ValidationMessage For="@(() => Fidelity.DataNascita)" class="text-danger small ms-1" />
@@ -137,42 +177,43 @@
                                          <div class="col-md-4">
                                             <div class="form-group mb-1">
                                                 <label for="Provincia" class="form-label-modern">Provincia</label>
-                                                <InputText id="Provincia" @bind-Value="Fidelity.Provincia" class="form-control form-control-modern" placeholder="Sigla (es. BA)" style="text-transform: uppercase;" @onblur="() => Fidelity.Provincia = Fidelity.Provincia?.ToUpper()" />
+                                                <InputText id="Provincia" @bind-Value="Fidelity.Provincia" class="form-control form-control-modern" placeholder="Sigla (es. BA)" style="text-transform: uppercase;" @onblur="() => Fidelity.Provincia = Fidelity.Provincia?.ToUpper()" maxlength="2" />
                                                 <ValidationMessage For="@(() => Fidelity.Provincia)" class="text-danger small ms-1" />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group mb-1">
                                                 <label for="Cap" class="form-label-modern">CAP</label>
-                                                <InputText id="Cap" @bind-Value="Fidelity.Cap" class="form-control form-control-modern" placeholder="CAP" />
+                                                <InputText id="Cap" @bind-Value="Fidelity.Cap" class="form-control form-control-modern" placeholder="CAP" maxlength="5" />
                                                  <ValidationMessage For="@(() => Fidelity.Cap)" class="text-danger small ms-1" />
-                                            </div>
-                                        </div>
-                                         <div class="col-md-4 d-none"> 
-                                            <div class="form-group mb-1">
-                                                <label for="Nazione" class="form-label-modern">Nazione</label>
-                                                <InputText id="Nazione" @bind-Value="Fidelity.Nazione" class="form-control form-control-modern" placeholder="Nazione" style="text-transform: uppercase;" @onblur="() => Fidelity.Nazione = Fidelity.Nazione?.ToUpper()" />
-                                                <ValidationMessage For="@(() => Fidelity.Nazione)" class="text-danger small ms-1" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="d-grid mt-5">
-                                        <button type="submit" class="btn btn-registration btn-lg text-white py-3 shadow-sm">
-                                            <i class="bi bi-check-lg me-2"></i> Conferma e Registrati
+                                        <button type="submit" class="btn btn-registration btn-lg text-white py-3 shadow-sm" disabled="@IsLoading">
+                                            @if (IsLoading)
+                                            {
+                                                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                                <span>Registrazione...</span>
+                                            }
+                                            else
+                                            {
+                                                <span><i class="bi bi-check-lg me-2"></i> Conferma e Registrati</span>
+                                            }
                                         </button>
                                     </div>
                                 </EditForm>
-                            }
 
-                            <div class="mt-4 text-center">
-                                <small class="text-muted opacity-75">
-                                    <i class="bi bi-shield-lock-fill me-1"></i> 
-                                    I tuoi dati sono trattati in conformità alla normativa sulla privacy.
-                                </small>
+                                <div class="mt-4 text-center">
+                                    <small class="text-muted opacity-75">
+                                        <i class="bi bi-shield-lock-fill me-1"></i> 
+                                        I tuoi dati sono trattati in conformità alla normativa sulla privacy.
+                                    </small>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -180,135 +221,188 @@
 }
 
 
+
 @code {
-    // leggo il parametro "token" dalla query string
     [SupplyParameterFromQuery(Name = "token")] public string Token { get; set; } = string.Empty;
 
-    private string ErrorMessage { get; set; } = string.Empty;
+    private string? ToastMessage { get; set; }
+    private bool IsToastError { get; set; }
+    private bool IsToastVisible { get; set; }
+    
+    // Legacy ErrorMessage removed/replaced by ToastMessage via ShowToast
+    private string ErrorMessage 
+    { 
+        get => ToastMessage ?? string.Empty; 
+        set => ShowToast(value, true); 
+    }
+
     Fidelity Fidelity = new();
     public static CustomSettings? CustomSettings { get; set; } = null;
     private bool Success { get; set; } = false;
+    private bool IsLoading { get; set; } = false;
 
     private bool IsVisible { get; set; } = true;
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        // Artificial delay for smooth entry (optional, can be removed)
+        // await Task.Delay(500);
     }
 
     protected override async Task OnAfterRenderAsync(bool first)
     {
         await base.OnAfterRenderAsync(first);
 
-        // l'if qui sotto non dovrebbe servire più
         if (CustomSettings == null)
         {
-            // leggo dal Manifest i dati relativi a custom_settings
             var manifestData = await JS.InvokeAsync<Dictionary<string, JsonElement>>("manifestInterop.getManifest");
             CustomSettings = JsonSerializer.Deserialize<CustomSettings>(manifestData["custom_settings"]);
 
-            // effettuo chiamata al server per leggere contenuto del token
             var actionurl = $"{CustomSettings?.Endpoint ?? string.Empty}/api/FidelityCard/EmailConfirmation?token={Token}";
-            var fileContent = await Http.GetStringAsync(actionurl);
-            if (!string.IsNullOrEmpty(fileContent))
+            
+            // Show loading during token check? Maybe not needed as it's very fast, but good for consistency
+            IsLoading = true;
+            StateHasChanged();
+            
+            try 
             {
-                // ricavo i parametri (e-mail e store) dal file letto tramite api 
-                string[] param = fileContent.Split("\r\n");
-                Fidelity.Email = param[1];
-                Fidelity.Store = param[0];
-                IsVisible = true;
+                var fileContent = await Http.GetStringAsync(actionurl);
+                if (!string.IsNullOrEmpty(fileContent))
+                {
+                    string[] param = fileContent.Split("\r\n");
+                    Fidelity.Email = param[1];
+                    Fidelity.Store = param[0];
+                    IsVisible = true;
+                }
+                else
+                {
+                    NM.NavigateTo("/error");
+                }
             }
-            else
+            catch(Exception)
             {
                 NM.NavigateTo("/error");
             }
-            StateHasChanged();
+            finally
+            {
+                IsLoading = false;
+                StateHasChanged();
+            }
         }
     }
     
+    private async void ShowToast(string message, bool isError)
+    {
+        if (string.IsNullOrWhiteSpace(message)) return;
+
+        ToastMessage = message;
+        IsToastError = isError;
+        IsToastVisible = true;
+        StateHasChanged();
+
+        await Task.Delay(5000); // 5 seconds auto-dismiss
+
+        IsToastVisible = false;
+        StateHasChanged();
+    }
+
     private async Task OnHandleSubmit()
     {
-        ErrorMessage = string.Empty;
+        if (IsLoading) return; // Prevent double submit
 
-        var actionurl = CustomSettings?.EndpointSede;
-        //var actionurl = "http://fidelity.lilloeivagabondi.it:5530/ArcaExec/arca_dataexchange";
-        var dbsede = CustomSettings?.DbNameSede;
-        if (string.IsNullOrEmpty(dbsede))
+        IsLoading = true;
+        StateHasChanged();
+
+        // Small delay to show the spinner (UX best practice for perceived performance if API is too fast)
+        await Task.Delay(800); 
+
+        try 
         {
-            throw new Exception("Il nome del database sede non è stato specificato");
-        }
-
-        // effettuo chiamata api esterna per creare nuova fidelity
-        var request = new RequestSede(){
-            Request = new()
+            var actionurl = CustomSettings?.EndpointSede;
+            var dbsede = CustomSettings?.DbNameSede;
+            if (string.IsNullOrEmpty(dbsede))
             {
-                DbName = dbsede,
-                SpName = "xTSP_API_Put_Fidelity",
-                CalledFrom = "APP FIDELIT"
-            },
-            Parameters = [
-                new() { Name = "store", Value = Fidelity.Store },
-                new() { Name = "tipo", Value = "D" },
-                new() { Name = "nome", Value = Fidelity.Nome },
-                new() { Name = "cognome", Value = Fidelity.Cognome },
-                new() { Name = "sesso", Value = Fidelity.Sesso },
-                new() { Name = "data_nascita", Value = Fidelity.DataNascita?.ToString("yyyyMMdd") },
-                //  new() { Name = "codice_fiscale", Value = "" },
-                new() { Name = "indirizzo", Value = Fidelity.Indirizzo },
-                new() { Name = "localita", Value = Fidelity.Localita },
-                new() { Name = "cap", Value = Fidelity.Cap },
-                new() { Name = "provincia", Value = Fidelity.Provincia },
-                new() { Name = "nazione", Value = Fidelity.Nazione },
-                new() { Name = "cellulare", Value = Fidelity.Cellulare },
-                new() { Name = "email", Value = Fidelity.Email }
-            ]
-        };
-        var response = await Http.PostAsJsonAsync(actionurl, request);
+                throw new Exception("Il nome del database sede non è stato specificato");
+            }
 
-
-        if (response.IsSuccessStatusCode)
-        {
-            // analizzo risposta e leggo codice fidelity
-            var json = await response.Content.ReadFromJsonAsync<JsonDocument>();
-            if (json != null) 
-            {
-                var jsonRoot = json.RootElement;
-                var responseArray = jsonRoot.GetProperty("response").EnumerateArray();
-                var responseElement = responseArray.First();
-                var datasetArray = responseElement.GetProperty("dataset").EnumerateArray();
-                var datasetElement = datasetArray.First();
-                string? CdFidelity = datasetElement.GetProperty("codice_fidelity").GetString();
-
-                if (CdFidelity != null)
+            var request = new RequestSede(){
+                Request = new()
                 {
-                    Fidelity.CdFidelity = CdFidelity;
+                    DbName = dbsede,
+                    SpName = "xTSP_API_Put_Fidelity",
+                    CalledFrom = "APP FIDELIT"
+                },
+                Parameters = [
+                    new() { Name = "store", Value = Fidelity.Store },
+                    new() { Name = "tipo", Value = "D" },
+                    new() { Name = "nome", Value = Fidelity.Nome },
+                    new() { Name = "cognome", Value = Fidelity.Cognome },
+                    new() { Name = "sesso", Value = Fidelity.Sesso },
+                    new() { Name = "data_nascita", Value = Fidelity.DataNascita?.ToString("yyyyMMdd") },
+                    new() { Name = "indirizzo", Value = Fidelity.Indirizzo },
+                    new() { Name = "localita", Value = Fidelity.Localita },
+                    new() { Name = "cap", Value = Fidelity.Cap },
+                    new() { Name = "provincia", Value = Fidelity.Provincia },
+                    new() { Name = "nazione", Value = Fidelity.Nazione },
+                    new() { Name = "cellulare", Value = Fidelity.Cellulare },
+                    new() { Name = "email", Value = Fidelity.Email }
+                ]
+            };
+            var response = await Http.PostAsJsonAsync(actionurl, request);
 
-                    // effettuo chiamata al server per salvare nuova fidelity
-                    actionurl = Path.Combine(CustomSettings?.Endpoint ?? string.Empty, "api/FidelityCard");
-                    response = await Http.PostAsJsonAsync(actionurl, Fidelity);
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadFromJsonAsync<JsonDocument>();
+                if (json != null) 
+                {
+                    var jsonRoot = json.RootElement;
+                    var responseArray = jsonRoot.GetProperty("response").EnumerateArray();
+                    var responseElement = responseArray.First();
+                    var datasetArray = responseElement.GetProperty("dataset").EnumerateArray();
+                    var datasetElement = datasetArray.First();
+                    string? CdFidelity = datasetElement.GetProperty("codice_fidelity").GetString();
 
-                    if (response.IsSuccessStatusCode)
+                    if (CdFidelity != null)
                     {
-                        // Salvataggio riuscito
-                        // Mostra messaggio di successo
-                        Success = true;
-                        // Fidelity = new(); // Non resettiamo per ora, o se resettiamo non importa perché mostriamo il success message
+                        Fidelity.CdFidelity = CdFidelity;
+
+                        actionurl = Path.Combine(CustomSettings?.Endpoint ?? string.Empty, "api/FidelityCard");
+                        response = await Http.PostAsJsonAsync(actionurl, Fidelity);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Success = true;
+                            ShowToast("Registrazione completata con successo!", false);
+                        }
+                        else
+                        {
+                            ShowToast(await response.Content.ReadAsStringAsync(), true);
+                        }
                     }
                     else
                     {
-                        ErrorMessage = await response.Content.ReadAsStringAsync();
+                        ShowToast("Non è stato possibile ottenere il nuovo codice fidelity dalla sede.", true);
                     }
                 }
                 else
                 {
-                    ErrorMessage = "Non è stato possibile ottenere il nuovo codice fidelity dalla sede.";
-                }
+                    ShowToast("Non è stato possibile ottenere il nuovo codice fidelity dalla sede.", true);
+                }                       
             }
             else
             {
-                ErrorMessage = "Non è stato possibile ottenere il nuovo codice fidelity dalla sede.";
-            }                       
+                ShowToast("Errore di comunicazione con il server centrale.", true);
+            }
         }
-
+        catch (Exception ex)
+        {
+            ShowToast($"Si è verificato un errore: {ex.Message}", true);
+        }
+        finally
+        {
+            IsLoading = false;
+            StateHasChanged();
+        }
     }
 }
 

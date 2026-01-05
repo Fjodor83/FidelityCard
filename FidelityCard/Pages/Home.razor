@@ -158,7 +158,8 @@
              var endpoint = CustomSettings?.Endpoint ?? "";
 
              // Rimuovo il check preventivo, fa tutto EmailValidation ora
-             var validationUrl = $"{endpoint}/api/FidelityCard/EmailValidation?email={emailRegistrazione}&store={Store}";
+             var currentStore = string.IsNullOrWhiteSpace(Store) ? "NE001" : Store;
+             var validationUrl = $"{endpoint}/api/FidelityCard/EmailValidation?email={Uri.EscapeDataString(emailRegistrazione)}&store={Uri.EscapeDataString(currentStore)}";
              var response = await Http.GetAsync(validationUrl);
              
              if (response.IsSuccessStatusCode)

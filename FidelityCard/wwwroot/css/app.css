@@ -739,3 +739,319 @@ input[type="date"].form-control-modern::-webkit-calendar-picker-indicator {
     background-position: right 2.5rem center;
     /* Move validation icon left of calendar icon */
 }
+
+/* ============================================
+   PREMIUM UX/UI DESIGN SYSTEM
+   ============================================ */
+
+:root {
+    /* Color Palette */
+    --primary-color: #105a12;
+    --primary-gradient: linear-gradient(135deg, #105a12 0%, #053e30 100%);
+    --secondary-color: #053e30;
+    --accent-color: #7bc96f;
+    --success-color: #26b050;
+    --error-color: #dc3545;
+    --warning-color: #ffc107;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --bg-light: #f8f9fa;
+    --white: #ffffff;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* Global Polish */
+body {
+    background-color: var(--bg-light);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 20px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse-subtle {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+/* ============================================
+   COMPONENT: ELEGANT SPINNER (Loading State)
+   ============================================ */
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.elegant-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(16, 90, 18, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    font-weight: 500;
+    color: var(--primary-color);
+    letter-spacing: 0.5px;
+    animation: pulse-subtle 2s infinite;
+}
+
+/* ============================================
+   COMPONENT: TOAST NOTIFICATIONS
+   ============================================ */
+.toast-container-custom {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast-custom {
+    background: white;
+    border-left: 4px solid var(--primary-color);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    min-width: 300px;
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toast-custom.show {
+    transform: translateX(0);
+}
+
+.toast-custom.error {
+    border-left-color: var(--error-color);
+}
+
+.toast-custom.success {
+    border-left-color: var(--success-color);
+}
+
+.toast-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.toast-custom.error .toast-icon {
+    color: var(--error-color);
+}
+
+.toast-custom.success .toast-icon {
+    color: var(--success-color);
+}
+
+.toast-content h6 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.toast-content p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   COMPONENT: INTERACTIVE FLIP CARD
+   ============================================ */
+.flip-card-container {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 400px;
+    height: 480px;
+    /* Increased to fit QR code */
+    /* Adjust based on content */
+    margin: 0 auto;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.flip-card-container:hover .flip-card-inner,
+.flip-card-container.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.flip-card-front {
+    background-color: #105a12;
+    /* Fallback */
+    background: var(--primary-gradient);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.flip-card-back {
+    background-color: white;
+    color: var(--text-primary);
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    z-index: 1;
+}
+
+.card-shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+/* ============================================
+   UI POLISH & MICRO-INTERACTIONS
+   ============================================ */
+.form-control-modern {
+    border: 1px solid #e0e0e0;
+    background: #fcfcfc;
+    transition: all 0.3s ease;
+}
+
+.form-control-modern:focus {
+    background: #ffffff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(16, 90, 18, 0.1);
+    transform: translateY(-1px);
+}
+
+.btn-registration {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-registration::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+.btn-registration:active::after {
+    animation: ripple 0.6s ease-out;
+}
