@@ -127,7 +127,21 @@
                                                 <label for="DataNascita" class="form-label-modern">Data di nascita</label>
                                                 <div class="input-wrapper">
                                                     <i class="bi bi-calendar-event input-icon"></i>
-                                                    <InputDate id="DataNascita" @bind-Value="Fidelity.DataNascita" class="form-control form-control-modern" max="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                                    <input id="DataNascita" 
+                                                           type="text" 
+                                                           class="form-control form-control-modern" 
+                                                           value="@(Fidelity.DataNascita?.ToString("dd/MM/yyyy"))"
+                                                           @onchange="@((ChangeEventArgs e) => {
+                                                               if (DateTime.TryParseExact(e.Value?.ToString(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out var result))
+                                                               {
+                                                                   Fidelity.DataNascita = result;
+                                                               }
+                                                               else
+                                                               {
+                                                                   Fidelity.DataNascita = null;
+                                                               }
+                                                           })"
+                                                           placeholder="dd/MM/yyyy" />
                                                 </div>
                                                 <ValidationMessage For="@(() => Fidelity.DataNascita)" class="text-danger small ms-1" />
                                             </div>
