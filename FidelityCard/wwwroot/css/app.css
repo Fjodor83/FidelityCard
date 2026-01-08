@@ -1,4 +1,7 @@
 :root {
+    /* ============================================
+       1. VARIABLES
+       ============================================ */
     /* Color Palette */
     --primary-color: #105a12;
     --primary-gradient: linear-gradient(135deg, #105a12ff 0%, #053e30ff 100%);
@@ -7,19 +10,26 @@
     --success-color: #26b050;
     --error-color: #dc3545;
     --warning-color: #ffc107;
+
     --text-primary: #333333;
     --text-secondary: #666666;
+
     --bg-light: #f8f9fa;
     --white: #ffffff;
+
     /* Shadows */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
 }
 
+/* ============================================
+   2. RESET & BASE
+   ============================================ */
 html,
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -33,7 +43,7 @@ a,
     color: #0071c1;
 }
 
-/* Remove focus outline from static text elements to prevent visual glitches */
+/* Remove focus outlines */
 h1:focus,
 h2:focus,
 h3:focus,
@@ -48,7 +58,7 @@ h6:focus,
 }
 
 /* ============================================
-   SHARED UTILITIES & GRADIENTS
+   3. SHARED UTILITIES
    ============================================ */
 .bg-suns-gradient {
     background: var(--primary-gradient);
@@ -58,8 +68,13 @@ h6:focus,
     color: var(--primary-color);
 }
 
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 /* ============================================
-   BLAZOR SYSTEM UI
+   4. GLOBAL UI (Blazor, Loading)
    ============================================ */
 #blazor-error-ui {
     background: lightyellow;
@@ -86,7 +101,7 @@ h6:focus,
     width: 8rem;
     height: 8rem;
     inset: 20vh 0 auto 0;
-    margin: 0 auto 0 auto;
+    margin: 0 auto;
 }
 
 .loading-progress circle {
@@ -104,8 +119,109 @@ h6:focus,
 }
 
 /* ============================================
-   COMPONENTS: TOAST & SPINNER
+   5. CORE COMPONENTS (Buttons, Forms)
    ============================================ */
+/* Buttons */
+.btn-custom,
+.btn-custom-welcome,
+.btn-registration {
+    background: var(--primary-gradient);
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(16, 90, 18, 0.3);
+}
+
+.btn-custom,
+.btn-custom-welcome {
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+}
+
+.btn-custom:hover,
+.btn-custom-welcome:hover:not(:disabled),
+.btn-registration:hover:not(:disabled) {
+    background: linear-gradient(135deg, #0d4a0fff 0%, #042a25ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 90, 18, 0.4);
+    color: white;
+}
+
+.btn-custom:active,
+.btn-custom-welcome:active:not(:disabled),
+.btn-registration:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn-registration {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Forms & Inputs */
+.form-label-modern {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.form-control-modern {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    background-color: #f8f9fa;
+    /* Spacing for icons */
+    padding-left: 2.8rem;
+    padding-right: 2.5rem;
+}
+
+.form-control-modern:focus {
+    background-color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(16, 90, 18, 0.15);
+    transform: translateY(-1px);
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    pointer-events: none;
+    font-size: 1.1rem;
+    z-index: 5;
+    opacity: 0.7;
+}
+
+/* Validation Icons */
+.form-control-modern.valid.modified:not([type=checkbox]),
+.form-control-modern.invalid {
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    outline: none;
+}
+
+.form-control-modern.valid.modified:not([type=checkbox]) {
+    border-color: var(--success-color);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2326b050' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+}
+
+.form-control-modern.invalid {
+    border-color: var(--error-color);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+}
+
+/* ============================================
+   6. FEEDBACK COMPONENTS (Toasts, Spinners)
+   ============================================ */
+/* Spinner Overlay */
 .spinner-overlay {
     position: fixed;
     top: 0;
@@ -138,6 +254,7 @@ h6:focus,
     animation: pulse-subtle 2s infinite;
 }
 
+/* Custom Toast */
 .toast-container-custom {
     position: fixed;
     top: 20px;
@@ -197,9 +314,120 @@ h6:focus,
 }
 
 /* ============================================
-   PAGE: HOME / WELCOME / REGISTRATION
+   7. FEATURE COMPONENTS (Cards)
    ============================================ */
-/* Common Backgrounds */
+/* Flip Card */
+.flip-card-container {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 400px;
+    height: 480px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    will-change: transform;
+}
+
+.flip-card-container:hover .flip-card-inner,
+.flip-card-container.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.flip-card-front {
+    background: var(--primary-gradient);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    transform: rotateY(0deg);
+}
+
+.flip-card-back {
+    background-color: white;
+    color: var(--text-primary);
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    z-index: 1;
+}
+
+.card-shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+/* Home & Welcome Cards */
+.home-card,
+.welcome-card {
+    border-radius: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 auto;
+}
+
+.home-card {
+    max-width: 500px;
+}
+
+.welcome-card {
+    max-width: 550px;
+}
+
+.home-card:hover,
+.welcome-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Benefits Section */
+.benefits-section {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(16, 90, 18, 0.05) 0%, rgba(5, 62, 48, 0.05) 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(16, 90, 18, 0.1);
+}
+
+.benefits-section h5 {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* ============================================
+   8. PAGE SPECIFICS
+   ============================================ */
+/* Backgrounds */
 .home-bg,
 .welcome-bg,
 .registration-bg,
@@ -240,28 +468,6 @@ h6:focus,
     background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
 }
 
-/* Cards & Containers */
-.home-card,
-.welcome-card {
-    border-radius: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin: 0 auto;
-}
-
-.home-card {
-    max-width: 500px;
-}
-
-.welcome-card {
-    max-width: 550px;
-}
-
-.home-card:hover,
-.welcome-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
-}
-
 /* Logos */
 .logo-img,
 .logo-img-welcome {
@@ -285,308 +491,8 @@ h6:focus,
     transform: scale(1.05);
 }
 
-/* Buttons */
-.btn-custom,
-.btn-custom-welcome,
-.btn-registration {
-    background: var(--primary-gradient);
-    border: none;
-    color: white;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(16, 90, 18, 0.3);
-}
-
-.btn-custom,
-.btn-custom-welcome {
-    padding: 0.875rem 2rem;
-    border-radius: 12px;
-}
-
-.btn-custom:hover,
-.btn-custom-welcome:hover:not(:disabled),
-.btn-registration:hover:not(:disabled) {
-    background: linear-gradient(135deg, #0d4a0fff 0%, #042a25ff 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(16, 90, 18, 0.4);
-    color: white;
-}
-
-.btn-custom:active,
-.btn-custom-welcome:active:not(:disabled),
-.btn-registration:active:not(:disabled) {
-    transform: translateY(0);
-}
-
-.btn-registration {
-    position: relative;
-    overflow: hidden;
-}
-
-/* Benefits Section */
-.benefits-section {
-    margin-top: 1.5rem;
-    padding: 1.5rem;
-    background: linear-gradient(135deg, rgba(16, 90, 18, 0.05) 0%, rgba(5, 62, 48, 0.05) 100%);
-    border-radius: 12px;
-    border: 1px solid rgba(16, 90, 18, 0.1);
-}
-
-.benefits-section h5 {
-    color: var(--primary-color);
-    font-weight: 700;
-}
-
 /* ============================================
-   COMPONENT: INTERACTIVE FLIP CARD
-   ============================================ */
-.flip-card-container {
-    perspective: 1000px;
-    width: 100%;
-    max-width: 400px;
-    height: 480px;
-    margin: 0 auto;
-    position: relative;
-    /* Essential for z-index */
-    z-index: 10;
-    /* Fixes overlapping with text below */
-}
-
-.flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-    cursor: pointer;
-    will-change: transform;
-    /* Hint for smoother animation */
-}
-
-.flip-card-container:hover .flip-card-inner,
-.flip-card-container.flipped .flip-card-inner {
-    transform: rotateY(180deg);
-}
-
-.flip-card-front,
-.flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    border-radius: 20px;
-    box-shadow: var(--shadow-lg);
-    overflow: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.flip-card-front {
-    background: var(--primary-gradient);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-    transform: rotateY(0deg);
-    /* Defines starting position explicitly */
-}
-
-.flip-card-back {
-    background-color: white;
-    color: var(--text-primary);
-    transform: rotateY(180deg);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    z-index: 1;
-}
-
-.card-shine {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
-    pointer-events: none;
-}
-
-/* ============================================
-   FORMS
-   ============================================ */
-.form-label-modern {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #495057;
-    margin-bottom: 0.25rem;
-    display: block;
-}
-
-.form-control-modern {
-    border-radius: 8px;
-    border: 1px solid #ced4da;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-    background-color: #f8f9fa;
-}
-
-.form-control-modern:focus {
-    background-color: #fff;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(16, 90, 18, 0.15);
-    transform: translateY(-1px);
-}
-
-/* Custom Validation Icons */
-.form-control-modern.valid.modified:not([type=checkbox]) {
-    outline: none;
-    border-color: var(--success-color);
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2326b050' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right calc(0.375em + 0.1875rem) center;
-    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-}
-
-.form-control-modern.invalid {
-    outline: none;
-    border-color: var(--error-color);
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right calc(0.375em + 0.1875rem) center;
-    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-}
-
-/* Input Wrappers & Icons */
-.input-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.input-icon {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--primary-color);
-    pointer-events: none;
-    font-size: 1.1rem;
-    z-index: 5;
-    opacity: 0.7;
-}
-
-.form-control-modern,
-.form-select.form-control-modern {
-    padding-left: 2.8rem;
-    /* Space for the icon */
-    padding-right: 2.5rem;
-    /* Space for validation icon */
-}
-
-/* Validation Icon Position Adjustment */
-.form-control-modern.valid.modified,
-.form-control-modern.invalid {
-    background-position: right calc(0.375em + 0.1875rem) center;
-}
-
-
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-@media (max-width: 992px) {
-    .logo-img {
-        width: 160px;
-        height: 160px;
-    }
-
-    .logo-img-welcome {
-        width: 120px;
-        height: 120px;
-    }
-
-    .nav-tabs-scrollable {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        padding-bottom: 5px;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .nav-tabs-scrollable .nav-link {
-        border-radius: 20px;
-        margin-right: 8px;
-        background: #f8f9fa;
-        color: #666;
-        white-space: nowrap;
-    }
-
-    .nav-tabs-scrollable .nav-link.active {
-        background: var(--primary-color);
-        color: white !important;
-    }
-}
-
-@media (max-width: 768px) {
-    .logo-img {
-        width: 140px;
-        height: 140px;
-    }
-
-    .logo-img-welcome {
-        width: 110px;
-        height: 110px;
-    }
-
-    .home-card,
-    .welcome-card {
-        border-radius: 16px;
-    }
-
-    .card-body {
-        padding: 2.5rem 1.5rem !important;
-    }
-
-    .benefits-section {
-        padding: 1.25rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .logo-img {
-        width: 120px;
-        height: 120px;
-    }
-
-    .logo-img-welcome {
-        width: 90px;
-        height: 90px;
-    }
-
-    .card-body {
-        padding: 2rem 1.5rem !important;
-    }
-
-    .toast-container-custom {
-        top: 10px;
-        right: 10px;
-        left: 10px;
-    }
-
-    .toast-custom {
-        min-width: auto;
-        width: 100%;
-    }
-}
-
-/* ============================================
-   ANIMATIONS
+   9. ANIMATIONS
    ============================================ */
 @keyframes fadeInUp {
     from {
@@ -653,12 +559,13 @@ h6:focus,
 }
 
 /* ============================================
-   FLATPICKR OVERRIDES
+   10. LIBRARY OVERRIDES (Flatpickr)
    ============================================ */
 @media (max-width: 576px) {
+
+    /* Reduce calendar size on mobile */
     .flatpickr-current-month {
         font-size: 110% !important;
-        /* Scale down from default 135% */
         padding-top: 10px !important;
     }
 
@@ -667,7 +574,6 @@ h6:focus,
         font-weight: 600 !important;
         padding: 0 !important;
         appearance: none;
-        /* Make it look integrated */
         -webkit-appearance: none;
     }
 
@@ -677,7 +583,7 @@ h6:focus,
         margin: 0 auto !important;
     }
 
-    /* Improve Year Select visibility */
+    /* Year Select visibility */
     .flatpickr-current-month .cur-year {
         font-size: 1rem !important;
         font-weight: 600 !important;
@@ -688,5 +594,97 @@ h6:focus,
         padding-top: 0.4rem;
         padding-bottom: 0.4rem;
         font-size: 0.9rem;
+        /* Ensure it can shrink if bootstrap sets min-height */
+        min-height: auto;
+    }
+}
+
+/* ============================================
+   11. RESPONSIVE UTILITIES (Consolidated)
+   ============================================ */
+@media (max-width: 992px) {
+    .logo-img {
+        width: 160px;
+        height: 160px;
+    }
+
+    .logo-img-welcome {
+        width: 120px;
+        height: 120px;
+    }
+
+    /* Scrollable Tabs */
+    .nav-tabs-scrollable {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 5px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-tabs-scrollable .nav-link {
+        border-radius: 20px;
+        margin-right: 8px;
+        background: #f8f9fa;
+        color: #666;
+        white-space: nowrap;
+    }
+
+    .nav-tabs-scrollable .nav-link.active {
+        background: var(--primary-color);
+        color: white !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .logo-img-welcome {
+        width: 110px;
+        height: 110px;
+    }
+
+    .home-card,
+    .welcome-card {
+        border-radius: 16px;
+    }
+
+    .card-body {
+        padding: 2.5rem 1.5rem !important;
+    }
+
+    .benefits-section {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .logo-img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .logo-img-welcome {
+        width: 90px;
+        height: 90px;
+    }
+
+    .card-body {
+        padding: 2rem 1.5rem !important;
+    }
+
+    /* Toast Mobile Adjustment */
+    .toast-container-custom {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+
+    .toast-custom {
+        min-width: auto;
+        width: 100%;
     }
 }
