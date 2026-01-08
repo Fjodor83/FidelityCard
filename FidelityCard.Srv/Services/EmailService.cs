@@ -13,11 +13,11 @@ public class EmailService : IEmailService
     private readonly EmailSettings _emailSettings;
 
     // Costanti per design consistente
-    private const string PrimaryGradient = "linear-gradient(135deg, #105a12ff 0%, #053e30ff 100%)";
-    private const string PrimaryColor = "#105a12ff";
-    private const string SecondaryColor = "#053e30ff";
-    private const string TextColor = "#666";
-    private const string DarkColor = "#333";
+    private const string PrimaryGradient = "linear-gradient(135deg, #105a12 0%, #053e30 100%)";
+    private const string PrimaryColor = "#105a12";
+    private const string SecondaryColor = "#053e30";
+    private const string TextColor = "#666666";
+    private const string DarkColor = "#333333";
 
     public EmailService(IOptions<EmailSettings> emailSettings)
     {
@@ -110,7 +110,8 @@ public class EmailService : IEmailService
             box-shadow: 0 4px 24px rgba(0,0,0,0.08);
         }}
         .header {{ 
-            background: {PrimaryGradient}; 
+            background-color: {PrimaryColor};
+            background-image: {PrimaryGradient}; 
             color: white; 
             padding: 48px 32px; 
             text-align: center; 
@@ -125,6 +126,7 @@ public class EmailService : IEmailService
             margin: 0; 
             opacity: 0.95; 
             font-size: 16px; 
+            color: white;
         }}
         .content {{ 
             padding: 48px 32px; 
@@ -146,7 +148,8 @@ public class EmailService : IEmailService
         }}
         .button {{ 
             display: inline-block;
-            background: {PrimaryGradient};
+            background-color: {PrimaryColor};
+            background-image: {PrimaryGradient};
             color: white !important;
             padding: 16px 48px;
             text-decoration: none;
@@ -155,7 +158,10 @@ public class EmailService : IEmailService
             font-size: 16px;
             box-shadow: 0 4px 12px rgba(16, 90, 18, 0.3);
             transition: all 0.3s;
+            mso-padding-alt: 0;
+            text-underline-color: {PrimaryColor};
         }}
+
         .info-box {{ 
             background-color: #f8f9fa; 
             border-left: 4px solid {PrimaryColor}; 
@@ -170,7 +176,8 @@ public class EmailService : IEmailService
             margin: 0; 
         }}
         .code-box {{ 
-            background: {PrimaryGradient};
+            background-color: {PrimaryColor};
+            background-image: {PrimaryGradient};
             color: white; 
             padding: 32px; 
             text-align: center; 
@@ -182,12 +189,14 @@ public class EmailService : IEmailService
             font-size: 16px; 
             font-weight: 500;
             opacity: 0.95;
+            color: white;
         }}
         .code {{ 
             font-size: 40px; 
             font-weight: 700; 
             letter-spacing: 4px; 
             font-family: 'Courier New', monospace;
+            color: white;
         }}
         .benefits {{ 
             background-color: #f8f9fa; 
@@ -241,6 +250,11 @@ public class EmailService : IEmailService
             }}
         }}
     </style>
+    <!--[if mso]>
+    <style>
+        .button {{ background-color: {PrimaryColor} !important; }}
+    </style>
+    <![endif]-->
 </head>
 <body>
     {contenuto}

@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
 
-                                <EditForm Model="Fidelity" OnSubmit="OnHandleSubmit">
+                                <EditForm EditContext="@editContext" OnValidSubmit="OnHandleSubmit" OnInvalidSubmit="HandleInvalidSubmit">
                                     <DataAnnotationsValidator />
 
                                     <!-- Toast replaces static error message -->
@@ -131,16 +131,7 @@
                                                            type="text" 
                                                            class="form-control form-control-modern" 
                                                            value="@(Fidelity.DataNascita?.ToString("dd/MM/yyyy"))"
-                                                           @onchange="@((ChangeEventArgs e) => {
-                                                               if (DateTime.TryParseExact(e.Value?.ToString(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out var result))
-                                                               {
-                                                                   Fidelity.DataNascita = result;
-                                                               }
-                                                               else
-                                                               {
-                                                                   Fidelity.DataNascita = null;
-                                                               }
-                                                           })"
+                                                           @onchange="HandleDataNascitaChange"
                                                            placeholder="dd/MM/yyyy" />
                                                 </div>
                                                 <ValidationMessage For="@(() => Fidelity.DataNascita)" class="text-danger small ms-1" />
@@ -151,7 +142,7 @@
                                                 <label for="Sesso" class="form-label-modern">Sesso</label>
                                                 <div class="input-wrapper">
                                                     <i class="bi bi-gender-ambiguous input-icon"></i>
-                                                    <select id="Sesso" class="form-select form-control-modern" @onchange="(e) => Fidelity.Sesso = (string?)e.Value" value="@Fidelity.Sesso" style="cursor: pointer;">
+                                                    <select id="Sesso" class="form-select form-control-modern" @onchange="HandleSessoChange" value="@Fidelity.Sesso" style="cursor: pointer;">
                                                         <option value="" disabled selected>Seleziona...</option>
                                                         @foreach (var item in Helpers.SessoType)
                                                         {
@@ -236,7 +227,7 @@
                                                 <label for="Nazione" class="form-label-modern">Nazione</label>
                                                 <div class="input-wrapper">
                                                     <i class="bi bi-flag input-icon"></i>
-                                                    <InputText id="Nazione" @bind-Value="Fidelity.Nazione" class="form-control form-control-modern" placeholder="IT" maxlength="2" />
+                                                    <InputText id="Nazione" @bind-Value="Fidelity.Nazione" class="form-control form-control-modern" placeholder="IT" maxlength="2" style="text-transform: uppercase;" @onblur="() => Fidelity.Nazione = Fidelity.Nazione?.ToUpper()" />
                                                 </div>
                                                 <ValidationMessage For="@(() => Fidelity.Nazione)" class="text-danger small ms-1" />
                                             </div>
@@ -285,12 +276,18 @@
 
 
     Fidelity Fidelity = new();
+    private EditContext? editContext;
     public static CustomSettings? CustomSettings { get; set; } = null;
     private bool Success { get; set; } = false;
     private bool IsLoading { get; set; } = false;
 
 
 
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(Fidelity);
+    }
 
     protected override async Task OnAfterRenderAsync(bool first)
     {
@@ -337,6 +334,30 @@
                 StateHasChanged();
             }
         }
+    }
+
+    private void HandleDataNascitaChange(ChangeEventArgs e)
+    {
+        if (DateTime.TryParseExact(e.Value?.ToString(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out var result))
+        {
+            Fidelity.DataNascita = result;
+        }
+        else
+        {
+            Fidelity.DataNascita = null;
+        }
+        editContext?.NotifyFieldChanged(FieldIdentifier.Create(() => Fidelity.DataNascita));
+    }
+
+    private void HandleSessoChange(ChangeEventArgs e)
+    {
+        Fidelity.Sesso = e.Value?.ToString() ?? string.Empty;
+        editContext?.NotifyFieldChanged(FieldIdentifier.Create(() => Fidelity.Sesso));
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        ShowToast("Ci sono errori di validazione. Controlla i campi evidenziati.", true);
     }
 
     private async void ShowToast(string message, bool isError)
