@@ -392,7 +392,7 @@
             {
                 throw new Exception("Il nome del database sede non è stato specificato");
             }
-
+            
             var request = new RequestSede()
             {
                 Request = new()
@@ -407,7 +407,7 @@
                     new() { Name = "nome", Value = Fidelity.Nome },
                     new() { Name = "cognome", Value = Fidelity.Cognome },
                     new() { Name = "sesso", Value = Fidelity.Sesso },
-                    new() { Name = "data_nascita", Value = Fidelity.DataNascita?.ToString("yyyyMMdd") },
+                    new() { Name = "data_nascita", Value = Fidelity.DataNascita?.ToString("ddMMyyyy") },
                     new() { Name = "indirizzo", Value = Fidelity.Indirizzo },
                     new() { Name = "localita", Value = Fidelity.Localita },
                     new() { Name = "cap", Value = Fidelity.Cap },
@@ -418,43 +418,43 @@
                 ]
             };
             var response = await Http.PostAsJsonAsync(actionurl, request);
-
+                    
             if (response.IsSuccessStatusCode)
-            {
+                    {
                 var json = await response.Content.ReadFromJsonAsync<JsonDocument>();
                 if (json != null)
-                {
+                    {
                     var jsonRoot = json.RootElement;
                     var responseArray = jsonRoot.GetProperty("response").EnumerateArray();
                     var responseElement = responseArray.First();
                     var datasetArray = responseElement.GetProperty("dataset").EnumerateArray();
                     var datasetElement = datasetArray.First();
                     string? CdFidelity = datasetElement.GetProperty("codice_fidelity").GetString();
-
-                    if (CdFidelity != null)
-                    {
-                        Fidelity.CdFidelity = CdFidelity;
+                        
+                        if (CdFidelity != null)
+                        {
+                            Fidelity.CdFidelity = CdFidelity;
 
                         actionurl = Path.Combine(CustomSettings?.Endpoint ?? string.Empty, "api/FidelityCard");
-                        response = await Http.PostAsJsonAsync(actionurl, Fidelity);
+                            response = await Http.PostAsJsonAsync(actionurl, Fidelity);
 
-                        if (response.IsSuccessStatusCode)
-                        {
-                            Success = true;
-                            ShowToast("Registrazione completata con successo!", false);
+                            if (response.IsSuccessStatusCode)
+                            {
+                                Success = true;
+                                ShowToast("Registrazione completata con successo!", false);
+                            }
+                            else
+                            {
+                                ShowToast(await response.Content.ReadAsStringAsync(), true);
+                            }
                         }
                         else
                         {
-                            ShowToast(await response.Content.ReadAsStringAsync(), true);
+                        ShowToast("Non è stato possibile ottenere il nuovo codice fidelity dalla sede.", true);
                         }
                     }
                     else
                     {
-                        ShowToast("Non è stato possibile ottenere il nuovo codice fidelity dalla sede.", true);
-                    }
-                }
-                else
-                {
                     ShowToast("Non è stato possibile ottenere il nuovo codice fidelity dalla sede.", true);
                 }
             }
